@@ -5,7 +5,7 @@
 
 title: TUMP Research Group # Website name
 baseURL: 'https://example.com/' # Website URL (overridden by GitHub Actions)
-relativeURLs: true # Use relative URLs to work with any deployment path
+# relativeURLs: true # Use relative URLs to work with any deployment path
 
 ############################
 ## LANGUAGE

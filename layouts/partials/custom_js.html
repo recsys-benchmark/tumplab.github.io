@@ -4,6 +4,16 @@
 </a>
 
 <style>
+/* 隐藏footer中的版权信息和Hugo Blox Builder credit */
+footer .powered-by,
+footer .site-footer-credits,
+footer a[href*="hugo-blox-builder"],
+footer a[href*="HugoBlox"],
+footer .cc-license,
+footer .cc-icons {
+  display: none !important;
+}
+
 /* 固定在右下角的浮动按钮 */
 .floating-join-btn {
   position: fixed;
@@ -55,6 +65,49 @@ document.addEventListener('DOMContentLoaded', function() {
   if (joinBtn) {
     // 确保按钮在最上层
     joinBtn.style.display = 'flex';
+  }
+  
+  // 隐藏footer中的版权信息和Hugo Blox Builder credit
+  function hideFooterCredits() {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    
+    // 隐藏所有包含特定文本的元素
+    const allElements = footer.querySelectorAll('*');
+    allElements.forEach(function(el) {
+      const text = el.textContent || '';
+      if (text.includes('Hugo Blox Builder') || 
+          text.includes('Published with') ||
+          text.includes('CC BY') ||
+          text.includes('Creative Commons')) {
+        el.style.display = 'none';
+        el.remove();
+      }
+    });
+    
+    // 隐藏包含特定链接的元素
+    const links = footer.querySelectorAll('a');
+    links.forEach(function(link) {
+      const href = link.getAttribute('href') || '';
+      if (href.includes('hugo-blox') || href.includes('HugoBlox')) {
+        const parent = link.closest('p') || link.closest('div');
+        if (parent) {
+          parent.style.display = 'none';
+          parent.remove();
+        }
+      }
+    });
+  }
+  
+  hideFooterCredits();
+  setTimeout(hideFooterCredits, 100);
+  setTimeout(hideFooterCredits, 500);
+  
+  // 监听footer的变化
+  const observer = new MutationObserver(hideFooterCredits);
+  const footer = document.querySelector('footer');
+  if (footer) {
+    observer.observe(footer, { childList: true, subtree: true });
   }
 });
 </script>
